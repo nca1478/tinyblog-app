@@ -5,7 +5,7 @@ import { DashboardPage, HomePage, LoginPage } from '../components/pages'
 export const AppRoutes = () => {
   return (
     <BrowserRouter>
-      <div className="d-flex flex-column min-vh-100">
+      <div className="bg-dark d-flex flex-column min-vh-100">
         <MainNavbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
