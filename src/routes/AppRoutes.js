@@ -1,5 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
-import { MainNavbar } from '../components/common'
+import { Footer, MainNavbar } from '../components/common'
 import { DashboardPage, HomePage, LoginPage } from '../components/pages'
 
 export const AppRoutes = () => {
@@ -13,6 +13,7 @@ export const AppRoutes = () => {
           <Route path="/admin/dashboard" element={<DashboardPage />} />
           <Route path="/*" element={<Navigate to={'/'} />} />
         </Routes>
+        <Footer />
       </div>
     </BrowserRouter>
   )

@@ -1,8 +1,7 @@
 import React from 'react'
 import { Alert, Col, Container, Row } from 'react-bootstrap'
 import { posts } from '../../../data/posts'
-import { Showcase } from '../../common'
-import { PostItem } from '../../common/PostItem'
+import { PostItem, Showcase } from '../../common'
 
 export const HomePage = () => {
   return (
