@@ -5,13 +5,15 @@ import { DashboardPage, HomePage, LoginPage } from '../components/pages'
 export const AppRoutes = () => {
   return (
     <BrowserRouter>
-      <MainNavbar />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/admin" element={<LoginPage />} />
-        <Route path="/admin/dashboard" element={<DashboardPage />} />
-        <Route path="/*" element={<Navigate to={'/'} />} />
-      </Routes>
+      <div className="d-flex flex-column min-vh-100">
+        <MainNavbar />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/admin" element={<LoginPage />} />
+          <Route path="/admin/dashboard" element={<DashboardPage />} />
+          <Route path="/*" element={<Navigate to={'/'} />} />
+        </Routes>
+      </div>
     </BrowserRouter>
   )
 }
