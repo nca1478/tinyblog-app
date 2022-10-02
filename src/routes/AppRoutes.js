@@ -1,6 +1,11 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { Footer, MainNavbar } from '../components/common'
-import { DashboardPage, HomePage, LoginPage } from '../components/pages'
+import {
+  DashboardPage,
+  HomePage,
+  LoginPage,
+  PostPage,
+} from '../components/pages'
 
 export const AppRoutes = () => {
   return (
@@ -11,6 +16,7 @@ export const AppRoutes = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/admin" element={<LoginPage />} />
           <Route path="/admin/dashboard" element={<DashboardPage />} />
+          <Route path="/post/:postId/details" element={<PostPage />} />
           <Route path="/*" element={<Navigate to={'/'} />} />
         </Routes>
         <Footer />
