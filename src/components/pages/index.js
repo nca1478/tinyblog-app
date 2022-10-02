@@ -1,4 +1,5 @@
 export * from './Admin/Dashboard'
 export * from './Admin/Login'
 export * from './Home'
-export * from './Post'
+export * from './Post/Post'
+export * from './Post/Posts'

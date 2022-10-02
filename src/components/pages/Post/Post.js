@@ -47,7 +47,7 @@ export const PostPage = () => {
             </Row>
             <p className="lead">{post.body}</p>
 
-            <hr className="my-4" />
+            <hr className="mt-5 mb-4" />
 
             <div className="text-center">
               <Button variant="dark">Anterior</Button>{' '}

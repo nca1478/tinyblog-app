@@ -5,6 +5,7 @@ import {
   HomePage,
   LoginPage,
   PostPage,
+  PostsPage,
 } from '../components/pages'
 
 export const AppRoutes = () => {
@@ -17,6 +18,7 @@ export const AppRoutes = () => {
           <Route path="/admin" element={<LoginPage />} />
           <Route path="/admin/dashboard" element={<DashboardPage />} />
           <Route path="/post/:postId/details" element={<PostPage />} />
+          <Route path="/posts" element={<PostsPage />} />
           <Route path="/*" element={<Navigate to={'/'} />} />
         </Routes>
         <Footer />
