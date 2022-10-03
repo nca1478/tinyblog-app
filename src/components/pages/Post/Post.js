@@ -18,7 +18,7 @@ export const PostPage = () => {
   }, [postId])
 
   return (
-    <div className="bg-white">
+    <div className="bg-white animate__animated animate__fadeIn">
       <Container>
         <Row className="my-4">
           <Col>

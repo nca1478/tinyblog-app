@@ -39,16 +39,16 @@ export const MainNavbar = () => {
                 Inicio
               </NavLink>
 
+              <NavLink to="/posts" className={styleActive}>
+                Posts
+              </NavLink>
+
               <NavLink to="/admin/dashboard" className={styleActive}>
                 Dashboard
               </NavLink>
 
               <NavLink to="/admin/post/add" className={styleActive}>
                 Agregar Post
-              </NavLink>
-
-              <NavLink to="/posts" className={styleActive}>
-                Posts
               </NavLink>
             </Nav>
 

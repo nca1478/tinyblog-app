@@ -7,6 +7,9 @@ export const posts = [
     date: '01-10-2022',
     author: 'Admin',
     published: 'false',
+    numVisits: 0,
+    numLikes: 0,
+    numDislikes: 0,
   },
   {
     id: '2',
@@ -16,6 +19,9 @@ export const posts = [
     date: '01-10-2022',
     author: 'Admin',
     published: 'false',
+    numVisits: 0,
+    numLikes: 0,
+    numDislikes: 0,
   },
   {
     id: '3',
@@ -25,6 +31,9 @@ export const posts = [
     date: '01-10-2022',
     author: 'Admin',
     published: 'false',
+    numVisits: 0,
+    numLikes: 0,
+    numDislikes: 0,
   },
   {
     id: '4',
@@ -34,5 +43,8 @@ export const posts = [
     date: '01-10-2022',
     author: 'Admin',
     published: 'false',
+    numVisits: 0,
+    numLikes: 0,
+    numDislikes: 0,
   },
 ]

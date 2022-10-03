@@ -1,4 +1,5 @@
 // Dependencies
+import { useEffect } from 'react'
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { ToastContainer, toast } from 'react-toastify'
@@ -13,7 +14,12 @@ export const AddPostPage = () => {
     formState: { errors },
   } = useForm()
 
-  const onSubmit = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
+  const onSubmit = (data) => {
+    console.log({ data })
     toast.info('Post ha sido creado exitosamente')
   }
 
