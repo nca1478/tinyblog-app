@@ -43,6 +43,10 @@ export const MainNavbar = () => {
                 Dashboard
               </NavLink>
 
+              <NavLink to="/admin/post/add" className={styleActive}>
+                Agregar Post
+              </NavLink>
+
               <NavLink to="/posts" className={styleActive}>
                 Posts
               </NavLink>

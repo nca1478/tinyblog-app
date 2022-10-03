@@ -1,7 +1,9 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { Footer, MainNavbar } from '../components/common'
 import {
+  AddPostPage,
   DashboardPage,
+  EditPostPage,
   HomePage,
   LoginPage,
   PostPage,
@@ -17,6 +19,8 @@ export const AppRoutes = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/admin" element={<LoginPage />} />
           <Route path="/admin/dashboard" element={<DashboardPage />} />
+          <Route path="/admin/post/add" element={<AddPostPage />} />
+          <Route path="/admin/post/:postId/edit" element={<EditPostPage />} />
           <Route path="/post/:postId/details" element={<PostPage />} />
           <Route path="/posts" element={<PostsPage />} />
           <Route path="/*" element={<Navigate to={'/'} />} />
