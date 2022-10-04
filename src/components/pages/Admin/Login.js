@@ -1,11 +1,18 @@
 // Dependencies
+import { useContext } from 'react'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap'
+import { ToastContainer } from 'react-toastify'
 
 // Custom Dependencies
+import { AuthContext } from '../../../context/authContext'
 import { InputGroupForm } from './components/InputGroupForm'
+import { postLogin } from './services'
 
 export const LoginPage = () => {
+  const { dispatch } = useContext(AuthContext)
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
@@ -13,7 +20,7 @@ export const LoginPage = () => {
   } = useForm()
 
   const onSubmit = (data) => {
-    console.log({ data })
+    postLogin(data, dispatch, navigate)
   }
 
   return (
@@ -60,6 +67,7 @@ export const LoginPage = () => {
             </Card>
           </Col>
         </Row>
+        <ToastContainer />
       </Container>
     </Col>
   )

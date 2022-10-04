@@ -1,14 +1,23 @@
 // Dependencies
+import { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
-import { Container, Nav, Navbar, Form } from 'react-bootstrap'
+import { Container, Nav, Navbar, Form, Button } from 'react-bootstrap'
+import { AuthContext } from '../../../context/authContext'
+import { types } from '../../../types/types'
 
 export const MainNavbar = () => {
+  const { user, dispatch } = useContext(AuthContext)
   const { register, handleSubmit, setValue } = useForm()
   const navigate = useNavigate()
 
   const handleOnBlur = () => {
     setValue('searchText', null)
+  }
+
+  const handleLogout = () => {
+    dispatch({ type: types.logout })
+    navigate('/', { replace: true })
   }
 
   const onSubmit = (data) => {
@@ -43,13 +52,17 @@ export const MainNavbar = () => {
                 Posts
               </NavLink>
 
-              <NavLink to="/admin/dashboard" className={styleActive}>
-                Dashboard
-              </NavLink>
+              {user.logged && (
+                <>
+                  <NavLink to="/admin/dashboard" className={styleActive}>
+                    Dashboard
+                  </NavLink>
 
-              <NavLink to="/admin/post/add" className={styleActive}>
-                Agregar Post
-              </NavLink>
+                  <NavLink to="/admin/post/add" className={styleActive}>
+                    Agregar Post
+                  </NavLink>
+                </>
+              )}
             </Nav>
 
             <Form
@@ -67,9 +80,19 @@ export const MainNavbar = () => {
               />
             </Form>
 
-            <NavLink to="/admin" className="btn btn-primary me-2">
-              Admin
-            </NavLink>
+            {!user.logged ? (
+              <NavLink to="/admin" className="btn btn-primary me-2">
+                Admin
+              </NavLink>
+            ) : (
+              <Button
+                to="/logout"
+                className="btn btn-danger me-2"
+                onClick={handleLogout}
+              >
+                Salir
+              </Button>
+            )}
           </Navbar.Collapse>
         </Container>
       </Navbar>
