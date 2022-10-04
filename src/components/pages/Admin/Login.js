@@ -13,7 +13,7 @@ export const LoginPage = () => {
   } = useForm()
 
   const onSubmit = (data) => {
-    console.log('submit')
+    console.log({ data })
   }
 
   return (
