@@ -1,16 +1,20 @@
 // Dependencies
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
-import { ToastContainer, toast } from 'react-toastify'
+import { ToastContainer } from 'react-toastify'
 
 // Custom Dependencies
+import { AuthContext } from '../../../context/authContext'
 import { InputForm, TextareaForm } from './components'
+import { addPost } from './services'
 
 export const AddPostPage = () => {
+  const { user } = useContext(AuthContext)
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm()
 
@@ -19,8 +23,7 @@ export const AddPostPage = () => {
   }, [])
 
   const onSubmit = (data) => {
-    console.log({ data })
-    toast.info('Post ha sido creado exitosamente')
+    addPost(data, user, reset)
   }
 
   return (

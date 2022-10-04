@@ -8,7 +8,7 @@ import { ToastContainer } from 'react-toastify'
 // Custom Dependencies
 import { AuthContext } from '../../../context/authContext'
 import { InputGroupForm } from './components/InputGroupForm'
-import { postLogin } from './services'
+import { loginUser } from './services'
 
 export const LoginPage = () => {
   const { dispatch } = useContext(AuthContext)
@@ -20,7 +20,7 @@ export const LoginPage = () => {
   } = useForm()
 
   const onSubmit = (data) => {
-    postLogin(data, dispatch, navigate)
+    loginUser(data, dispatch, navigate)
   }
 
   return (

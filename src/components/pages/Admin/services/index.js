@@ -3,7 +3,7 @@ import { toast } from 'react-toastify'
 import { post } from '../../../../config/api'
 import { types } from '../../../../types/types'
 
-export const postLogin = (data, dispatch, navigate) => {
+export const loginUser = (data, dispatch, navigate) => {
   post('/users/login', data)
     .then((response) => {
       if (response.data === null) {
