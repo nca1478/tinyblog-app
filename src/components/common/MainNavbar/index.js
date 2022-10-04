@@ -78,21 +78,21 @@ export const MainNavbar = () => {
                   onBlur: handleOnBlur,
                 })}
               />
-            </Form>
 
-            {!user.logged ? (
-              <NavLink to="/admin" className="btn btn-primary me-2">
-                Admin
-              </NavLink>
-            ) : (
-              <Button
-                to="/logout"
-                className="btn btn-danger me-2"
-                onClick={handleLogout}
-              >
-                Salir
-              </Button>
-            )}
+              {!user.logged ? (
+                <NavLink to="/admin/login" className="btn btn-primary me-2">
+                  Admin
+                </NavLink>
+              ) : (
+                <Button
+                  to="/logout"
+                  className="btn btn-danger me-2"
+                  onClick={handleLogout}
+                >
+                  Salir
+                </Button>
+              )}
+            </Form>
           </Navbar.Collapse>
         </Container>
       </Navbar>
