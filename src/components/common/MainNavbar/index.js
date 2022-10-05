@@ -79,6 +79,7 @@ export const MainNavbar = () => {
                 {...register('searchText', {
                   onBlur: handleOnBlur,
                 })}
+                autoComplete="off"
               />
 
               {!user.logged ? (

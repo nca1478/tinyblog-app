@@ -23,7 +23,7 @@ export const addPost = (data, user, reset) => {
 }
 
 export const getPosts = async (user, setPosts, setLoaded) => {
-  await get(`/posts?page=1&limit=4`, user.data.token)
+  await get(`/posts?page=1&limit=5`, user.data.token)
     .then((response) => {
       if (response.data === null) {
         toast.error(response.errors.msg)
@@ -136,4 +136,22 @@ export const deletePost = (postId, user, setPosts, setLoaded) => {
         getPosts(user, setPosts, setLoaded)
       })
   }
+}
+
+export const searchPost = async (q, setPosts, setLoaded) => {
+  await get(`/posts/search?q=${q}`)
+    .then((response) => {
+      if (response.data === null) {
+        toast.error(response.errors.msg)
+      } else {
+        setPosts(response.data)
+      }
+    })
+    .catch((error) => {
+      toast.error('Error al intentar obtener posts.')
+      console.log(error)
+    })
+    .finally(() => {
+      setLoaded(true)
+    })
 }

@@ -11,6 +11,7 @@ export const InputForm = (props) => {
         min={props.type === 'number' ? 1 : null}
         max={props.type === 'number' ? 100000000 : null}
         {...props.register(props.name, { required: true })}
+        autoComplete="off"
       />
       {props.errors && (
         <Form.Text className="text-danger w-100">Requerido</Form.Text>

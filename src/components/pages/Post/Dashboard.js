@@ -45,8 +45,11 @@ export const DashboardPage = () => {
               ))}
             </>
           ) : (
-            <Alert variant="danger" className="w-75">
-              Oh no.... No hay posts para mostrar. Vuelve pronto...
+            <Alert
+              variant="danger"
+              className="w-75 animate__animated animate__fadeIn"
+            >
+              Oh no.... No hay posts para mostrar. Debes agregar posts...
             </Alert>
           )}
         </Row>

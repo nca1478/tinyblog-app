@@ -27,7 +27,7 @@ export const PostPage = () => {
                 <h1 className="fw-bold display-5">{post.title}</h1>
                 <p className="h3">{post.title}</p>
                 <p className="text-muted fst-italic">
-                  Publicado por {post.author} el {post.createdAt}
+                  Publicado por <b>{post.author}</b> el {post.createdAt}
                 </p>
               </Col>
             </Row>

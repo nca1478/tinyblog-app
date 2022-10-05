@@ -1,5 +1,6 @@
 // Dependencies
 import { Row, Col, Container } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
 // Custom Dependencies
 import showcase from '../../../assets/img/showcase.svg'
@@ -15,12 +16,12 @@ export const Showcase = () => {
               <span className="text-warning">mucho más.</span>
             </h1>
             <p className="lead fw-bold my-4">
-              No te olvides de calificar la que más te guste.
+              Disfruta de nuestros temas donde y cuando quieras.
             </p>
 
-            <a href="#last-post" className="btn btn-primary btn-lg">
-              Ver Últimos Posts
-            </a>
+            <Link to="/posts" className="btn btn-primary btn-lg">
+              Ver todos Posts
+            </Link>
           </Col>
           <img
             className="img-fluid w-50 d-none d-md-block"

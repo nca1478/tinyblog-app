@@ -30,7 +30,10 @@ export const PostsPage = () => {
               })}
             </>
           ) : (
-            <Alert variant="danger" className="w-75">
+            <Alert
+              variant="danger"
+              className="w-75 animate__animated animate__fadeIn"
+            >
               Oh no.... No se han publicado posts. Vuelve pronto...
             </Alert>
           )}

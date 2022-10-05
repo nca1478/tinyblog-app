@@ -12,6 +12,7 @@ import {
   LoginPage,
   PostPage,
   PostsPage,
+  SearchPage,
 } from '../components/pages'
 
 // Routes
@@ -44,6 +45,7 @@ export const AppRoutes = () => {
           <Route path="/admin/login" element={<LoginPage />} />
           <Route path="/posts" element={<PostsPage />} />
           <Route path="/post/:postId/details" element={<PostPage />} />
+          <Route path="/search" element={<SearchPage />} />
 
           {/* PrivateRoutes */}
           <Route
