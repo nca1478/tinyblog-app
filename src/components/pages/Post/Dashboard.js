@@ -7,16 +7,15 @@ import { ToastContainer } from 'react-toastify'
 import { AuthContext } from '../../../context/authContext'
 import { SpinnerLoading } from '../../common'
 import { DashboardItem } from '../../common/DashboardItem'
-import { getPosts } from './services'
+import { getPosts, publishPost } from './services'
 
 export const DashboardPage = () => {
   const { user } = useContext(AuthContext)
   const [posts, setPosts] = useState([])
   const [loaded, setLoaded] = useState(false)
 
-  const handlePublish = (postId, published) => {
-    const isPublished = published === false ? 'true' : 'false'
-    alert(`Post con ID ${postId} fué publicado ${isPublished}`)
+  const handlePublish = (id, published) => {
+    publishPost({ id, published, user, setPosts, setLoaded })
   }
 
   const handleDelete = (postId) => {

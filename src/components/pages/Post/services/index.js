@@ -1,6 +1,6 @@
 // Dependencies
 import { toast } from 'react-toastify'
-import { get, post } from '../../../../config/api'
+import { get, post, put } from '../../../../config/api'
 
 export const addPost = (data, user, reset) => {
   post('/posts', data, user.data.token)
@@ -31,10 +31,31 @@ export const getPosts = async (user, setPosts, setLoaded) => {
       }
     })
     .catch((error) => {
-      toast.error('Error al intentar obtener ofertas de trabajo.')
+      toast.error('Error al intentar obtener posts.')
       console.log(error)
     })
     .finally(() => {
       setLoaded(true)
+    })
+}
+
+export const publishPost = async (params) => {
+  const { id, published, user, setPosts, setLoaded } = params
+  const isPublished = published === false ? 'true' : 'false'
+
+  put(`/posts/${id}/publish?status=${isPublished}`, {}, user.data.token)
+    .then((response) => {
+      if (response.data === null) {
+        toast.error(response.errors.msg)
+      } else {
+        toast.info(response.data.msg)
+      }
+    })
+    .catch((error) => {
+      toast.error('Error al intentar publicar oferta de trabajo.')
+      console.log(error)
+    })
+    .finally(() => {
+      getPosts(user, setPosts, setLoaded)
     })
 }
