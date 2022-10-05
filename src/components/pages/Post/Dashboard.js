@@ -5,8 +5,7 @@ import { ToastContainer } from 'react-toastify'
 
 // Custom Dependencies
 import { AuthContext } from '../../../context/authContext'
-import { SpinnerLoading } from '../../common'
-import { DashboardItem } from '../../common/DashboardItem'
+import { DashboardItem, SpinnerLoading } from '../../common'
 import { getPosts, publishPost } from './services'
 
 export const DashboardPage = () => {

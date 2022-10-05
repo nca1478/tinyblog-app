@@ -1,6 +1,9 @@
+// Dependencies
 import React, { useEffect, useState } from 'react'
 import { Col, Container, Row, Image, Button } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
+
+// Custom Dependencies
 import { getPost } from '../../../helpers/getPost'
 import imagePost from '../../../assets/img/post.jpg'
 

@@ -3,6 +3,8 @@ import { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { Container, Nav, Navbar, Form, Button } from 'react-bootstrap'
+
+// Custom Dependencies
 import { AuthContext } from '../../../context/authContext'
 import { types } from '../../../types/types'
 

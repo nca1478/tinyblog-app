@@ -1,5 +1,9 @@
+// Dependencies
+import { useEffect, useState } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { Footer, MainNavbar } from '../components/common'
+
+// Pages
 import {
   AddPostPage,
   DashboardPage,
@@ -9,9 +13,27 @@ import {
   PostPage,
   PostsPage,
 } from '../components/pages'
+
+// Routes
 import { PrivateRoute } from './PrivateRoute'
 
 export const AppRoutes = () => {
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false)
+    }, 1000)
+  }, [setLoading])
+
+  if (loading) {
+    return (
+      <div className="preloader-container">
+        <div className="preloader"></div>
+      </div>
+    )
+  }
+
   return (
     <BrowserRouter>
       <div className="bg-dark d-flex flex-column min-vh-100">

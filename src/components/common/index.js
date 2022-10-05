@@ -1,3 +1,4 @@
+export * from './DashboardItem'
 export * from './Footer'
 export * from './MainNavbar'
 export * from './PostItem'

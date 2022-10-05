@@ -3,6 +3,8 @@ import { useEffect } from 'react'
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap'
 import { ToastContainer, toast } from 'react-toastify'
 import { useForm } from 'react-hook-form'
+
+// Custom Dependencies
 import { InputForm, TextareaForm } from './components'
 
 export const EditPostPage = () => {

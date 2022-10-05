@@ -1,5 +1,9 @@
+// Dependencies
 import React, { useEffect, useState } from 'react'
 import { Alert, Col, Container, Row } from 'react-bootstrap'
+import { ToastContainer } from 'react-toastify'
+
+// Custom Dependencies
 import { PostItem, SpinnerLoading } from '../../common'
 import { getPostsPublished } from './services'
 
@@ -32,6 +36,7 @@ export const PostsPage = () => {
           )}
         </Row>
       </Container>
+      <ToastContainer />
     </Col>
   )
 }
