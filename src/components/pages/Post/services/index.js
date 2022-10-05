@@ -1,6 +1,7 @@
 // Dependencies
 import { toast } from 'react-toastify'
 import { get, post, put } from '../../../../config/api'
+import { parsePostDetails } from '../helpers'
 
 export const addPost = (data, user, reset) => {
   post('/posts', data, user.data.token)
@@ -36,6 +37,18 @@ export const getPosts = async (user, setPosts, setLoaded) => {
     })
     .finally(() => {
       setLoaded(true)
+    })
+}
+
+export const getPostDetails = async (postId, setPost) => {
+  await get(`/posts/${postId}`)
+    .then((response) => {
+      const postDetails = parsePostDetails(response)
+      setPost(postDetails)
+    })
+    .catch((error) => {
+      toast.error('Error al intentar obtener detalles del post.')
+      console.log(error)
     })
 }
 

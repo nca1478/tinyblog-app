@@ -2,22 +2,19 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Container, Row, Image, Button } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
 
 // Custom Dependencies
-import { getPost } from '../../../helpers/getPost'
 import imagePost from '../../../assets/img/post.jpg'
+import { getPostDetails } from './services'
 
 export const PostPage = () => {
   const { postId } = useParams()
   const [post, setPost] = useState({})
 
-  const fetchPost = (postId) => {
-    setPost(getPost(postId))
-  }
-
   useEffect(() => {
     window.scrollTo(0, 0)
-    fetchPost(postId)
+    getPostDetails(postId, setPost)
   }, [postId])
 
   return (
@@ -30,7 +27,7 @@ export const PostPage = () => {
                 <h1 className="fw-bold display-5">{post.title}</h1>
                 <p className="h3">{post.title}</p>
                 <p className="text-muted fst-italic">
-                  Posteado en {post.date} por {post.author}
+                  Publicado por {post.author} el {post.createdAt}
                 </p>
               </Col>
             </Row>
@@ -58,6 +55,7 @@ export const PostPage = () => {
             </div>
           </Col>
         </Row>
+        <ToastContainer />
       </Container>
     </div>
   )
