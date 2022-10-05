@@ -39,6 +39,24 @@ export const getPosts = async (user, setPosts, setLoaded) => {
     })
 }
 
+export const getPostsPublished = async (setPosts, setLoaded) => {
+  get(`/posts/published?status=true&page=1&limit=4`)
+    .then((response) => {
+      if (response.data === null) {
+        toast.error(response.errors.msg)
+      } else {
+        setPosts(response.data.rows)
+      }
+    })
+    .catch((error) => {
+      toast.error('Error al intentar obtener posts.')
+      console.log(error)
+    })
+    .finally(() => {
+      setLoaded(true)
+    })
+}
+
 export const publishPost = async (params) => {
   const { id, published, user, setPosts, setLoaded } = params
   const isPublished = published === false ? 'true' : 'false'
