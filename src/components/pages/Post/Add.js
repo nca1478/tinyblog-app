@@ -23,7 +23,7 @@ export const AddPostPage = () => {
   }, [])
 
   const onSubmit = (data) => {
-    addPost(data, user, reset)
+    addPost({ data, user, reset })
   }
 
   return (

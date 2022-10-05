@@ -14,7 +14,7 @@ export const PostPage = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0)
-    getPostDetails(postId, setPost)
+    getPostDetails({ postId, setPost })
   }, [postId])
 
   return (

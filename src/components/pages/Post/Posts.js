@@ -4,17 +4,24 @@ import { Alert, Col, Container, Row } from 'react-bootstrap'
 import { ToastContainer } from 'react-toastify'
 
 // Custom Dependencies
-import { PostItem, SpinnerLoading } from '../../common'
-import { getPostsPublished } from './services'
+import { Paginate, PostItem, SpinnerLoading } from '../../common'
+import { getPostsPaginate, getPostsPublished } from './services'
 
 export const PostsPage = () => {
   const [posts, setPosts] = useState([])
   const [loaded, setLoaded] = useState(false)
+  const [pageCount, setPageCount] = useState(0)
+  const limit = 4
 
   useEffect(() => {
     window.scrollTo(0, 0)
-    getPostsPublished(setPosts, setLoaded)
+    getPostsPublished({ setPosts, setLoaded, setPageCount, limit })
   }, [])
+
+  const handlePageClick = (data) => {
+    let currentPage = data.selected + 1
+    getPostsPaginate({ currentPage, limit, setPosts, setLoaded })
+  }
 
   return (
     <Col className="bg-primary">
@@ -28,6 +35,8 @@ export const PostsPage = () => {
               {posts.map((post) => {
                 return <PostItem key={post.id} {...post} />
               })}
+
+              <Paginate pageCount={pageCount} onPageChange={handlePageClick} />
             </>
           ) : (
             <Alert

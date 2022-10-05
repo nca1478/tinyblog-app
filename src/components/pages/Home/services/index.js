@@ -2,7 +2,8 @@
 import { toast } from 'react-toastify'
 import { get } from '../../../../config/api'
 
-export const getLastPosts = async (setPosts, setLoaded) => {
+export const getLastPosts = async (params) => {
+  const { setPosts, setLoaded } = params
   const lastPosts = 4
 
   await get(`/posts/lastposts?limit=${lastPosts}`)

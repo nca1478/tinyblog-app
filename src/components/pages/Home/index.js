@@ -12,7 +12,7 @@ export const HomePage = () => {
   const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
-    getLastPosts(setPosts, setLoaded)
+    getLastPosts({ setPosts, setLoaded })
   }, [])
 
   return (

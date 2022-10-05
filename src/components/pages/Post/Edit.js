@@ -23,7 +23,7 @@ export const EditPostPage = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0)
-    getPostEdit(postId, setPost)
+    getPostEdit({ postId, setPost })
   }, [postId])
 
   useEffect(() => {
@@ -31,7 +31,7 @@ export const EditPostPage = () => {
   }, [post, reset])
 
   const onSubmit = (data) => {
-    updatePost(postId, data, user)
+    updatePost({ postId, data, user })
   }
 
   return (

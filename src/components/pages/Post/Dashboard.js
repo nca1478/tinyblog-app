@@ -18,12 +18,12 @@ export const DashboardPage = () => {
   }
 
   const handleDelete = (postId) => {
-    deletePost(postId, user, setPosts, setLoaded)
+    deletePost({ postId, user, setPosts, setLoaded })
   }
 
   useEffect(() => {
     window.scrollTo(0, 0)
-    getPosts(user, setPosts, setLoaded)
+    getPosts({ user, setPosts, setLoaded })
   }, [user])
 
   return (

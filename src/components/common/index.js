@@ -1,6 +1,7 @@
 export * from './DashboardItem'
 export * from './Footer'
 export * from './MainNavbar'
+export * from './Paginate'
 export * from './PostItem'
 export * from './Showcase'
 export * from './SpaceBlank'

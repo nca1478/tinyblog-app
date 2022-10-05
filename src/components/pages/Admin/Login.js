@@ -20,7 +20,7 @@ export const LoginPage = () => {
   } = useForm()
 
   const onSubmit = (data) => {
-    loginUser(data, dispatch, navigate)
+    loginUser({ data, dispatch, navigate })
   }
 
   return (

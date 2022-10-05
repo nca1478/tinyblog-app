@@ -16,7 +16,7 @@ export const SearchPage = () => {
   const { q = '' } = queryString.parse(location.search)
 
   useEffect(() => {
-    searchPost(q, setPosts, setLoaded)
+    searchPost({ q, setPosts, setLoaded })
   }, [q])
 
   return (
