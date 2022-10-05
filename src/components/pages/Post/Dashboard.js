@@ -6,7 +6,7 @@ import { ToastContainer } from 'react-toastify'
 // Custom Dependencies
 import { AuthContext } from '../../../context/authContext'
 import { DashboardItem, SpinnerLoading } from '../../common'
-import { getPosts, publishPost } from './services'
+import { deletePost, getPosts, publishPost } from './services'
 
 export const DashboardPage = () => {
   const { user } = useContext(AuthContext)
@@ -18,10 +18,7 @@ export const DashboardPage = () => {
   }
 
   const handleDelete = (postId) => {
-    const confirm = window.confirm('¿Estás Seguro?')
-    if (confirm) {
-      alert(`Post con ID ${postId} fué eliminado con éxito`)
-    }
+    deletePost(postId, user, setPosts, setLoaded)
   }
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 // Dependencies
 import { toast } from 'react-toastify'
-import { get, post, put } from '../../../../config/api'
+import { del, get, post, put } from '../../../../config/api'
 import { parsePostDetails } from '../helpers'
 
 export const addPost = (data, user, reset) => {
@@ -115,4 +115,25 @@ export const updatePost = (postId, data, user) => {
       toast.error('Error al intentar actualizar el post.')
       console.log(error)
     })
+}
+
+export const deletePost = (postId, user, setPosts, setLoaded) => {
+  const confirm = window.confirm('¿Estás Seguro?')
+  if (confirm) {
+    del(`/posts/${postId}`, user.data.token)
+      .then((response) => {
+        if (response.data === null) {
+          toast.error(response.errors.msg)
+        } else {
+          toast.info('El post ha sido eliminado exitosamente')
+        }
+      })
+      .catch((error) => {
+        toast.error('Error al intentar eliminar el post.')
+        console.log(error)
+      })
+      .finally(() => {
+        getPosts(user, setPosts, setLoaded)
+      })
+  }
 }
