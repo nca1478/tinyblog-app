@@ -35,7 +35,7 @@ export const PostPage = () => {
             <hr />
 
             <Row>
-              <Col className="d-flex justify-content-center">
+              <Col className="d-flex justify-content-center animate__animated animate__fadeInUp">
                 <Image
                   className="my-3"
                   src={imagePost}
@@ -45,9 +45,12 @@ export const PostPage = () => {
                 />
               </Col>
             </Row>
-            <p className="lead">{post.body}</p>
 
-            <hr className="mt-5 mb-4" />
+            <hr className="mb-4" />
+
+            <p className="parrafo">{post.body}</p>
+
+            <hr className="mt-4 mb-4" />
 
             <div className="text-center">
               <Button variant="dark">Anterior</Button>{' '}

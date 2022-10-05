@@ -14,7 +14,7 @@ export const DashboardItem = (props) => {
         <Card.Body className="animate__animated animate__fadeIn">
           <Row>
             <Col className="d-flex align-items-center justify-content-between text-center">
-              <Link to={`/offer/${id}/edit`}>
+              <Link to={`/admin/post/${id}/edit`}>
                 <img
                   className="img-thumbnail d-none d-md-block"
                   src={img ? img : noImage}

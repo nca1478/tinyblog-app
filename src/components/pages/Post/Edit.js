@@ -1,26 +1,37 @@
 // Dependencies
-import { useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap'
-import { ToastContainer, toast } from 'react-toastify'
+import { ToastContainer } from 'react-toastify'
 import { useForm } from 'react-hook-form'
 
 // Custom Dependencies
 import { InputForm, TextareaForm } from './components'
+import { getPostEdit, updatePost } from './services'
+import { AuthContext } from '../../../context/authContext'
 
 export const EditPostPage = () => {
+  const { user } = useContext(AuthContext)
+  const { postId } = useParams()
+  const [post, setPost] = useState({})
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm()
 
   useEffect(() => {
     window.scrollTo(0, 0)
-  }, [])
+    getPostEdit(postId, setPost)
+  }, [postId])
+
+  useEffect(() => {
+    reset(post) // Cargando datos en el formulario
+  }, [post, reset])
 
   const onSubmit = (data) => {
-    console.log({ data })
-    toast.info('Post ha sido actualizado exitosamente')
+    updatePost(postId, data, user)
   }
 
   return (

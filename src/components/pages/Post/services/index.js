@@ -52,6 +52,17 @@ export const getPostDetails = async (postId, setPost) => {
     })
 }
 
+export const getPostEdit = async (postId, setPost) => {
+  await get(`/posts/${postId}`)
+    .then((response) => {
+      setPost(response.data)
+    })
+    .catch((error) => {
+      toast.error('Error al intentar obtener detalles del post.')
+      console.log(error)
+    })
+}
+
 export const getPostsPublished = async (setPosts, setLoaded) => {
   get(`/posts/published?status=true&page=1&limit=4`)
     .then((response) => {
@@ -88,5 +99,20 @@ export const publishPost = async (params) => {
     })
     .finally(() => {
       getPosts(user, setPosts, setLoaded)
+    })
+}
+
+export const updatePost = (postId, data, user) => {
+  put(`/posts/${postId}/update`, data, user.data.token)
+    .then((response) => {
+      if (response.data === null) {
+        toast.error(response.errors.msg)
+      } else {
+        toast.info(response.data.msg)
+      }
+    })
+    .catch((error) => {
+      toast.error('Error al intentar actualizar el post.')
+      console.log(error)
     })
 }
