@@ -1,17 +1,19 @@
 // Dependencies
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { Col, Container, Row, Image } from 'react-bootstrap'
 import { toast, ToastContainer } from 'react-toastify'
 
 // Custom Dependencies
+import { AuthContext } from '../../../context/authContext'
 import imagePost from '../../../assets/img/post.jpg'
-import { get } from '../../../config/api'
+import { get, put } from '../../../config/api'
 import { parsePostDetails } from './helpers'
 import { Paginate } from './components'
 
 export const PostPage = () => {
   const navigate = useNavigate()
+  const { user } = useContext(AuthContext)
   const { postId } = useParams()
   const [post, setPost] = useState({})
   const [posts, setPosts] = useState([])
@@ -49,6 +51,13 @@ export const PostPage = () => {
     setNextPage(next <= posts.length - 1 ? next : null)
   }, [post.id, posts])
 
+  const updatePostVisits = useCallback(async () => {
+    await put(`/posts/${postId}/visits`, {}, user.data.token).catch((error) => {
+      toast.error('Error al intentar actualizar número de visitas del post.')
+      console.log(error)
+    })
+  }, [postId, user])
+
   const handleClickPrev = () => {
     navigate(`/post/${posts[prevPage]}/details`, { replace: false })
   }
@@ -67,6 +76,10 @@ export const PostPage = () => {
     getPostsPages()
   }, [posts, getPostsPages])
 
+  useEffect(() => {
+    updatePostVisits()
+  }, [updatePostVisits])
+
   return (
     <div className="bg-white animate__animated animate__fadeIn">
       <Container>
@@ -80,7 +93,7 @@ export const PostPage = () => {
                   Publicado por <b>{post.author}</b> el {post.createdAt}
                 </p>
 
-                {/* Botones Anterior y Siguiente */}
+                {/* Botones de Post Anterior y Siguiente */}
                 <Paginate
                   handleClickPrev={handleClickPrev}
                   handleClickNext={handleClickNext}
