@@ -10,6 +10,7 @@ import {
   EditPostPage,
   HomePage,
   LoginPage,
+  MetricsPage,
   PostPage,
   PostsPage,
   SearchPage,
@@ -53,6 +54,15 @@ export const AppRoutes = () => {
             element={
               <PrivateRoute>
                 <DashboardPage />
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/admin/metrics"
+            element={
+              <PrivateRoute>
+                <MetricsPage />
               </PrivateRoute>
             }
           />

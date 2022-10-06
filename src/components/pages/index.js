@@ -1,5 +1,6 @@
 export * from './Admin/Login'
 export * from './Home'
+export * from './Metrics'
 export * from './Post/Add'
 export * from './Post/Dashboard'
 export * from './Post/Edit'

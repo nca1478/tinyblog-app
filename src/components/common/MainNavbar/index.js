@@ -60,6 +60,10 @@ export const MainNavbar = () => {
                     Dashboard
                   </NavLink>
 
+                  <NavLink to="/admin/metrics" className={styleActive}>
+                    Métricas
+                  </NavLink>
+
                   <NavLink to="/admin/post/add" className={styleActive}>
                     Agregar Post
                   </NavLink>

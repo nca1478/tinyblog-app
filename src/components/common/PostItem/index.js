@@ -3,7 +3,7 @@ import { Col, Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 // Custom Dependencies
-import noImage from '../../../assets/img/no-image.jpg'
+import imagePost from '../../../assets/img/post.jpg'
 
 export const PostItem = (props) => {
   const { id, title } = props
@@ -15,7 +15,7 @@ export const PostItem = (props) => {
         className="text-decoration-none text-dark"
       >
         <Card className="animate__animated animate__fadeIn">
-          <Card.Img variant="top" src={noImage} />
+          <Card.Img variant="top" src={imagePost} />
           <Card.Body>
             <Card.Text className="text-center" style={{ height: '5rem' }}>
               {title}

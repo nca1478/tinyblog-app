@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 import { Row, Col, Card, Stack, Button } from 'react-bootstrap'
 
 // Assets
-import noImage from '../../../assets/img/no-image.jpg'
+import imagePost from '../../../assets/img/post.jpg'
 
 export const DashboardItem = (props) => {
-  const { id, title, img, published, handlePublish, handleDelete } = props
+  const { id, title, published, handlePublish, handleDelete } = props
 
   return (
     <Col lg={9} sm={12}>
@@ -17,7 +17,7 @@ export const DashboardItem = (props) => {
               <Link to={`/admin/post/${id}/edit`}>
                 <img
                   className="img-thumbnail d-none d-md-block"
-                  src={img ? img : noImage}
+                  src={imagePost}
                   style={{ width: '10.625rem', height: '6.25rem' }}
                   alt=""
                 />
