@@ -39,7 +39,7 @@ export const PostPage = () => {
         setPosts(postsId)
       })
       .catch((error) => {
-        toast.error('Error al intentar obtener detalles del post.')
+        toast.error('Error al intentar obtener los posts.')
         console.log(error)
       })
   }

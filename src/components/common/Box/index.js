@@ -1,5 +1,6 @@
 // Dependencies
 import { Card } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
 export const Box = (props) => {
   return (
@@ -8,8 +9,18 @@ export const Box = (props) => {
         <h1 className="mb-3">
           <i className={props.icon}></i>
         </h1>
-        <h4 className="card-title mb-3">{props.title}</h4>
-        <p className="card-text h1">{props.bodyText}</p>
+        <h5 className="card-title mb-3">{props.title}</h5>
+        <p className="card-text h6">{props.bodyText}</p>
+
+        {/* Ver Post */}
+        {props.postId.length === 0 ? null : (
+          <Link
+            to={`/post/${props.postId}/details`}
+            className="btn btn-primary mt-2"
+          >
+            Ver Post
+          </Link>
+        )}
       </Card.Body>
     </Card>
   )
