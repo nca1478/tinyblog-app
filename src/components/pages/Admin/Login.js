@@ -3,12 +3,13 @@ import { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap'
-import { ToastContainer } from 'react-toastify'
+import { toast, ToastContainer } from 'react-toastify'
 
 // Custom Dependencies
 import { AuthContext } from '../../../context/authContext'
 import { InputGroupForm } from './components/InputGroupForm'
-import { loginUser } from './services'
+import { post } from '../../../config/api'
+import { types } from '../../../types/types'
 
 export const LoginPage = () => {
   const { dispatch } = useContext(AuthContext)
@@ -20,7 +21,30 @@ export const LoginPage = () => {
   } = useForm()
 
   const onSubmit = (data) => {
-    loginUser({ data, dispatch, navigate })
+    post('/users/login', data)
+      .then((response) => {
+        if (response.data === null) {
+          toast.error(response.errors.msg)
+        } else {
+          const dataUser = {
+            ...response.data.user,
+            token: response.data.token,
+          }
+
+          dispatch({
+            type: types.login,
+            payload: { data: dataUser },
+          })
+
+          navigate('/admin/dashboard', {
+            replace: true,
+          })
+        }
+      })
+      .catch((error) => {
+        toast.error('Error al intentar iniciar sesión.')
+        console.log(error)
+      })
   }
 
   return (

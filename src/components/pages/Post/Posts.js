@@ -1,11 +1,11 @@
 // Dependencies
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Alert, Col, Container, Row } from 'react-bootstrap'
-import { ToastContainer } from 'react-toastify'
+import { toast, ToastContainer } from 'react-toastify'
+import { get } from '../../../config/api'
 
 // Custom Dependencies
 import { Paginate, PostItem, SpinnerLoading } from '../../common'
-import { getPostsPaginate, getPostsPublished } from './services'
 
 export const PostsPage = () => {
   const [posts, setPosts] = useState([])
@@ -13,15 +13,52 @@ export const PostsPage = () => {
   const [pageCount, setPageCount] = useState(0)
   const limit = 4
 
-  useEffect(() => {
-    window.scrollTo(0, 0)
-    getPostsPublished({ setPosts, setLoaded, setPageCount, limit })
+  const preGetPosts = useCallback(async () => {
+    await get(`/posts/published?status=true&page=1&limit=${limit}`)
+      .then((response) => {
+        if (response.data === null) {
+          toast.error(response.errors.msg)
+        } else {
+          setPageCount(Math.ceil(response.data.count / limit))
+          setPosts(response.data.rows)
+        }
+      })
+      .catch((error) => {
+        toast.error('Error al intentar obtener posts.')
+        console.log(error)
+      })
+      .finally(() => {
+        setLoaded(true)
+      })
   }, [])
+
+  const getPosts = async (currentPage) => {
+    get(`/posts/published?status=true&page=${currentPage}&limit=${limit}`)
+      .then((response) => {
+        if (response.data === null) {
+          toast.error(response.errors.msg)
+        } else {
+          setPosts(response.data.rows)
+        }
+      })
+      .catch((error) => {
+        toast.error('Error al intentar obtener posts.')
+        console.log(error)
+      })
+      .finally(() => {
+        setLoaded(true)
+      })
+  }
 
   const handlePageClick = (data) => {
     let currentPage = data.selected + 1
-    getPostsPaginate({ currentPage, limit, setPosts, setLoaded })
+    getPosts(currentPage)
   }
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+    preGetPosts().catch(console.error)
+  }, [preGetPosts])
 
   return (
     <Col className="bg-primary">

@@ -1,14 +1,14 @@
 // Dependencies
-import { useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap'
-import { ToastContainer } from 'react-toastify'
+import { toast, ToastContainer } from 'react-toastify'
 import { useForm } from 'react-hook-form'
 
 // Custom Dependencies
 import { InputForm, TextareaForm } from './components'
-import { getPostEdit, updatePost } from './services'
 import { AuthContext } from '../../../context/authContext'
+import { get, put } from '../../../config/api'
 
 export const EditPostPage = () => {
   const { user } = useContext(AuthContext)
@@ -21,18 +21,40 @@ export const EditPostPage = () => {
     formState: { errors },
   } = useForm()
 
+  const getPost = useCallback(async () => {
+    await get(`/posts/${postId}`)
+      .then((response) => {
+        setPost(response.data)
+      })
+      .catch((error) => {
+        toast.error('Error al intentar obtener detalles del post.')
+        console.log(error)
+      })
+  }, [postId])
+
+  const onSubmit = async (data) => {
+    await put(`/posts/${postId}/update`, data, user.data.token)
+      .then((response) => {
+        if (response.data === null) {
+          toast.error(response.errors.msg)
+        } else {
+          toast.info(response.data.msg)
+        }
+      })
+      .catch((error) => {
+        toast.error('Error al intentar actualizar el post.')
+        console.log(error)
+      })
+  }
+
   useEffect(() => {
     window.scrollTo(0, 0)
-    getPostEdit({ postId, setPost })
-  }, [postId])
+    getPost().catch(console.error)
+  }, [getPost])
 
   useEffect(() => {
     reset(post) // Cargando datos en el formulario
   }, [post, reset])
-
-  const onSubmit = (data) => {
-    updatePost({ postId, data, user })
-  }
 
   return (
     <Col className="bg-primary">

@@ -1,21 +1,34 @@
 // Dependencies
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Col, Container, Row, Image, Button } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
-import { ToastContainer } from 'react-toastify'
+import { toast, ToastContainer } from 'react-toastify'
 
 // Custom Dependencies
 import imagePost from '../../../assets/img/post.jpg'
-import { getPostDetails } from './services'
+import { get } from '../../../config/api'
+import { parsePostDetails } from './helpers'
 
 export const PostPage = () => {
   const { postId } = useParams()
   const [post, setPost] = useState({})
 
+  const getPostById = useCallback(async () => {
+    await get(`/posts/${postId}`)
+      .then((response) => {
+        const postDetails = parsePostDetails(response)
+        setPost(postDetails)
+      })
+      .catch((error) => {
+        toast.error('Error al intentar obtener detalles del post.')
+        console.log(error)
+      })
+  }, [postId])
+
   useEffect(() => {
     window.scrollTo(0, 0)
-    getPostDetails({ postId, setPost })
-  }, [postId])
+    getPostById().catch(console.error)
+  }, [getPostById])
 
   return (
     <div className="bg-white animate__animated animate__fadeIn">
@@ -47,9 +60,7 @@ export const PostPage = () => {
             </Row>
 
             <hr className="mb-4" />
-
             <p className="parrafo">{post.body}</p>
-
             <hr className="mt-4 mb-4" />
 
             <div className="text-center">

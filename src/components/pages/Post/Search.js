@@ -1,13 +1,13 @@
 // Dependencies
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import { ToastContainer } from 'react-toastify'
+import { toast, ToastContainer } from 'react-toastify'
 import { Row, Col, Container, Alert } from 'react-bootstrap'
 import queryString from 'query-string'
 
 // Custom Dependencies
 import { PostItem, SpaceBlank, SpinnerLoading } from '../../common'
-import { searchPost } from './services'
+import { get } from '../../../config/api'
 
 export const SearchPage = () => {
   const location = useLocation()
@@ -15,9 +15,27 @@ export const SearchPage = () => {
   const [loaded, setLoaded] = useState(false)
   const { q = '' } = queryString.parse(location.search)
 
-  useEffect(() => {
-    searchPost({ q, setPosts, setLoaded })
+  const searchPost = useCallback(async () => {
+    await get(`/posts/search?q=${q}`)
+      .then((response) => {
+        if (response.data === null) {
+          toast.error(response.errors.msg)
+        } else {
+          setPosts(response.data)
+        }
+      })
+      .catch((error) => {
+        toast.error('Error al intentar obtener posts.')
+        console.log(error)
+      })
+      .finally(() => {
+        setLoaded(true)
+      })
   }, [q])
+
+  useEffect(() => {
+    searchPost().catch(console.error)
+  }, [searchPost])
 
   return (
     <Col className="bg-primary">

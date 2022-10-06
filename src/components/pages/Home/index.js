@@ -1,18 +1,38 @@
 // Dependencies
 import React, { useEffect, useState } from 'react'
 import { Alert, Col, Container, Row } from 'react-bootstrap'
-import { ToastContainer } from 'react-toastify'
+import { toast, ToastContainer } from 'react-toastify'
 
 // Custom Dependencies
+import { get } from '../../../config/api'
 import { PostItem, Showcase, SpinnerLoading } from '../../common'
-import { getLastPosts } from './services'
 
 export const HomePage = () => {
   const [posts, setPosts] = useState([])
   const [loaded, setLoaded] = useState(false)
 
+  const getLastPosts = async () => {
+    const lastPosts = 4
+
+    await get(`/posts/lastposts?limit=${lastPosts}`)
+      .then((response) => {
+        if (response.data === null) {
+          toast.error(response.errors.msg)
+        } else {
+          setPosts(response.data)
+        }
+      })
+      .catch((error) => {
+        toast.error('Error al intentar obtener últimos posts.')
+        console.log(error)
+      })
+      .finally(() => {
+        setLoaded(true)
+      })
+  }
+
   useEffect(() => {
-    getLastPosts({ setPosts, setLoaded })
+    getLastPosts()
   }, [])
 
   return (

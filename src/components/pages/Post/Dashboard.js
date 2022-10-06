@@ -1,30 +1,109 @@
 // Dependencies
-import { useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { Row, Col, Container, Alert } from 'react-bootstrap'
-import { ToastContainer } from 'react-toastify'
+import { toast, ToastContainer } from 'react-toastify'
 
 // Custom Dependencies
+import { del, get, put } from '../../../config/api'
 import { AuthContext } from '../../../context/authContext'
-import { DashboardItem, SpinnerLoading } from '../../common'
-import { deletePost, getPosts, publishPost } from './services'
+import { DashboardItem, Paginate, SpinnerLoading } from '../../common'
 
 export const DashboardPage = () => {
   const { user } = useContext(AuthContext)
   const [posts, setPosts] = useState([])
   const [loaded, setLoaded] = useState(false)
+  const [pageCount, setPageCount] = useState(0)
+  const [currentPage, setCurrentPage] = useState(1)
+  const limit = 5
 
-  const handlePublish = (id, published) => {
-    publishPost({ id, published, user, setPosts, setLoaded })
+  const preGetPosts = useCallback(async () => {
+    await get(`/posts?page=1&limit=5`, user.data.token)
+      .then((response) => {
+        if (response.data === null) {
+          toast.error(response.errors.msg)
+        } else {
+          setPageCount(Math.ceil(response.data.count / limit))
+          setPosts(response.data.rows)
+        }
+      })
+      .catch((error) => {
+        toast.error('Error al intentar obtener posts.')
+        console.log(error)
+      })
+      .finally(() => {
+        setLoaded(true)
+      })
+  }, [user])
+
+  const getPosts = async (page) => {
+    await get(`/posts?page=${page}&limit=${limit}`, user.data.token)
+      .then((response) => {
+        if (response.data === null) {
+          toast.error(response.errors.msg)
+        } else {
+          setPosts(response.data.rows)
+        }
+      })
+      .catch((error) => {
+        toast.error('Error al intentar obtener posts.')
+        console.log(error)
+      })
+      .finally(() => {
+        setLoaded(true)
+      })
+  }
+
+  const handlePublish = async (id, published) => {
+    const isPublished = published === false ? 'true' : 'false'
+
+    await put(`/posts/${id}/publish?status=${isPublished}`, {}, user.data.token)
+      .then((response) => {
+        if (response.data === null) {
+          toast.error(response.errors.msg)
+        } else {
+          toast.info(response.data.msg)
+        }
+      })
+      .catch((error) => {
+        toast.error('Error al intentar publicar post.')
+        console.log(error)
+      })
+      .finally(() => {
+        getPosts(currentPage)
+      })
   }
 
   const handleDelete = (postId) => {
-    deletePost({ postId, user, setPosts, setLoaded })
+    const confirm = window.confirm('¿Estás Seguro?')
+    if (confirm) {
+      del(`/posts/${postId}`, user.data.token)
+        .then((response) => {
+          if (response.data === null) {
+            toast.error(response.errors.msg)
+          } else {
+            toast.info('El post ha sido eliminado exitosamente')
+          }
+        })
+        .catch((error) => {
+          toast.error('Error al intentar eliminar el post.')
+          console.log(error)
+        })
+        .finally(() => {
+          preGetPosts()
+        })
+    }
+  }
+
+  const handlePageClick = async (data) => {
+    let page = data.selected + 1
+    getPosts(page)
+    setCurrentPage(page)
   }
 
   useEffect(() => {
     window.scrollTo(0, 0)
-    getPosts({ user, setPosts, setLoaded })
-  }, [user])
+    preGetPosts().catch(console.error)
+  }, [preGetPosts])
 
   return (
     <Col className="bg-primary">
@@ -43,6 +122,8 @@ export const DashboardPage = () => {
                   handleDelete={handleDelete}
                 />
               ))}
+
+              <Paginate pageCount={pageCount} onPageChange={handlePageClick} />
             </>
           ) : (
             <Alert

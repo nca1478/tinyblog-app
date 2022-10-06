@@ -1,13 +1,13 @@
 // Dependencies
 import { useContext, useEffect } from 'react'
-import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
-import { ToastContainer } from 'react-toastify'
+import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap'
+import { toast, ToastContainer } from 'react-toastify'
 
 // Custom Dependencies
 import { AuthContext } from '../../../context/authContext'
 import { InputForm, TextareaForm } from './components'
-import { addPost } from './services'
+import { post } from '../../../config/api'
 
 export const AddPostPage = () => {
   const { user } = useContext(AuthContext)
@@ -22,8 +22,22 @@ export const AddPostPage = () => {
     window.scrollTo(0, 0)
   }, [])
 
-  const onSubmit = (data) => {
-    addPost({ data, user, reset })
+  const onSubmit = async (data) => {
+    await post('/posts', data, user.data.token)
+      .then((response) => {
+        if (response.data === null) {
+          toast.error(response.errors.msg)
+        } else {
+          toast.info(response.data.msg)
+        }
+      })
+      .catch((error) => {
+        toast.error('Error al intentar añadir el post.')
+        console.log(error)
+      })
+      .finally(() => {
+        reset() // Reset form
+      })
   }
 
   return (
