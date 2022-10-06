@@ -1,5 +1,5 @@
 // Dependencies
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { Footer, MainNavbar } from '../components/common'
 
@@ -15,6 +15,7 @@ import {
   PostsPage,
   SearchPage,
 } from '../components/pages'
+import { put } from '../config/api'
 
 // Routes
 import { PrivateRoute } from './PrivateRoute'
@@ -22,11 +23,21 @@ import { PrivateRoute } from './PrivateRoute'
 export const AppRoutes = () => {
   const [loading, setLoading] = useState(true)
 
+  const updateBlogVisits = useCallback(async () => {
+    await put(`/metrics`, {}, null).catch((error) => {
+      console.log(error)
+    })
+  }, [])
+
   useEffect(() => {
     setTimeout(() => {
       setLoading(false)
     }, 1000)
   }, [setLoading])
+
+  useEffect(() => {
+    updateBlogVisits().catch(console.error)
+  }, [updateBlogVisits])
 
   if (loading) {
     return (
