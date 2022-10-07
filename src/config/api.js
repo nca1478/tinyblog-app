@@ -1,4 +1,4 @@
-const baseUrl = process.env.REACT_APP_API_URL
+const baseUrl = 'https://tinyblog-api-production.up.railway.app/api/v1'
 
 const get = (pathUrl, token) =>
   fetch(`${baseUrl}${pathUrl}`, {
